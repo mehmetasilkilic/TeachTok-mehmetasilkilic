@@ -14,9 +14,9 @@ const BottomTabStack = () => {
   return (
     <Tab.Navigator
       screenOptions={{
-        tabBarStyle: { backgroundColor: "#000" },
+        tabBarStyle: { backgroundColor: "#000", borderTopWidth: 0 },
         tabBarActiveTintColor: "#fff",
-        tabBarInactiveTintColor: "#555",
+        tabBarInactiveTintColor: "#777",
       }}
       initialRouteName="Home"
     >
