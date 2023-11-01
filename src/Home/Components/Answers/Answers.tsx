@@ -7,12 +7,12 @@ import useCorrectAnswer from "../../Hooks/useCorrectAnswer";
 
 import { styles } from "./styles";
 
-interface QuestionsProps {
+interface AnswersProps {
   options: OptionProps[];
   questionId: number;
 }
 
-const Questions = ({ options, questionId }: QuestionsProps) => {
+const Answers = ({ options, questionId }: AnswersProps) => {
   const [selectedOption, setSelectedOption] = useState("");
   const { correctOption } = useCorrectAnswer(questionId);
 
@@ -23,7 +23,7 @@ const Questions = ({ options, questionId }: QuestionsProps) => {
   };
 
   return (
-    <View style={styles.container} testID="questions-container">
+    <View style={styles.container} testID="answers-container">
       {options.map((option, index) => (
         <TouchableOpacity
           testID={`option-${index + 1}`}
@@ -55,4 +55,4 @@ const Questions = ({ options, questionId }: QuestionsProps) => {
   );
 };
 
-export default Questions;
+export default Answers;

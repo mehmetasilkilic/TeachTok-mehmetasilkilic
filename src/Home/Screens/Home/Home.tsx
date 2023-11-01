@@ -17,7 +17,7 @@ import HeaderTime from "../../Components/HeaderTime/HeaderTime";
 import Playlist from "../../Components/Playlist/Playlist";
 import Interactions from "../../Components/Interactions/Interactions";
 import Info from "../../Components/Info/Info";
-import Questions from "../../Components/Questions/Questions";
+import Answers from "../../Components/Answers/Answers";
 
 import { styles } from "./styles";
 
@@ -80,7 +80,7 @@ const Home = () => {
                         <View>
                           <View style={styles.row}>
                             <View style={styles.column}>
-                              <Questions
+                              <Answers
                                 options={question.options}
                                 questionId={question.id}
                               />

@@ -1,5 +1,5 @@
 import { render, fireEvent } from "@testing-library/react-native";
-import Questions from "../Questions";
+import Answers from "../Answers";
 import { styles } from "../styles";
 
 jest.mock("../../../Hooks/useCorrectAnswer", () => ({
@@ -16,13 +16,13 @@ const options = [
 ];
 const questionId = 1;
 
-describe("Questions Component", () => {
+describe("Answers Component", () => {
   it("renders correctly", () => {
     const { getByTestId, getByText } = render(
-      <Questions options={options} questionId={questionId} />
+      <Answers options={options} questionId={questionId} />
     );
 
-    const container = getByTestId("questions-container");
+    const container = getByTestId("answers-container");
     expect(container).toBeTruthy();
 
     options.forEach((option) => {
@@ -33,7 +33,7 @@ describe("Questions Component", () => {
 
   it("disables options after selecting one", () => {
     const { getByTestId } = render(
-      <Questions options={options} questionId={questionId} />
+      <Answers options={options} questionId={questionId} />
     );
 
     const option1 = getByTestId("option-1");
@@ -48,7 +48,7 @@ describe("Questions Component", () => {
 
   it("applies correct styles for a correct answer", () => {
     const { getByTestId } = render(
-      <Questions options={options} questionId={questionId} />
+      <Answers options={options} questionId={questionId} />
     );
 
     const option1 = getByTestId("option-1");
@@ -62,7 +62,7 @@ describe("Questions Component", () => {
 
   it("applies correct styles for a wrong answer", () => {
     const { getByTestId } = render(
-      <Questions options={options} questionId={questionId} />
+      <Answers options={options} questionId={questionId} />
     );
 
     const option2 = getByTestId("option-2");
