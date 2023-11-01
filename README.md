@@ -8,6 +8,12 @@ Install dependencies
   npm install
 ```
 
+To Test
+
+```bash
+  npm test
+```
+
 Open a simulator and Start the server
 
 ```bash
