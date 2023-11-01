@@ -11,7 +11,9 @@ interface InteractionsProps {
 const Interactions = ({ profileImage }: InteractionsProps) => (
   <View style={styles.container}>
     <View style={styles.subContainer}>
-      <Image source={{ uri: profileImage }} style={styles.image} />
+      <TouchableOpacity>
+        <Image source={{ uri: profileImage }} style={styles.image} />
+      </TouchableOpacity>
       <TouchableOpacity style={styles.plusContainer}>
         <AntDesign name="plus" size={14} color="#fff" />
       </TouchableOpacity>

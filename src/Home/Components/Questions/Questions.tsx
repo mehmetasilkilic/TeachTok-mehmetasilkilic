@@ -1,17 +1,21 @@
-import { useState, useRef } from "react";
-import { Animated, View, Text, TouchableOpacity } from "react-native";
+import { useState } from "react";
+import { View, Text, TouchableOpacity } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { OptionProps } from "../../Models";
+import useCorrectAnswer from "../../Hooks/useCorrectAnswer";
 
 import { styles } from "./styles";
 
 interface QuestionsProps {
   options: OptionProps[];
-  correctOption: string;
+  questionId: number;
+  questionStatus: string;
 }
 
-const Questions = ({ options, correctOption }: QuestionsProps) => {
+const Questions = ({ options, questionId, questionStatus }: QuestionsProps) => {
   const [selectedOption, setSelectedOption] = useState("");
+  const { correctOption } = useCorrectAnswer(questionId);
 
   const onSelectOption = (optionId: string) => {
     if (selectedOption === "") {
@@ -23,10 +27,13 @@ const Questions = ({ options, correctOption }: QuestionsProps) => {
     <View style={styles.container}>
       {options.map((option) => (
         <TouchableOpacity
+          disabled={selectedOption !== ""}
           onPress={() => onSelectOption(option.id)}
           key={option.id}
           style={
-            selectedOption === option.id
+            selectedOption === ""
+              ? styles.answer
+              : selectedOption === option.id
               ? selectedOption === correctOption
                 ? styles.correctAnswer
                 : styles.wrongAnswer
@@ -36,6 +43,12 @@ const Questions = ({ options, correctOption }: QuestionsProps) => {
           }
         >
           <Text style={styles.text}>{option.answer}</Text>
+          {selectedOption === option.id && selectedOption === correctOption ? (
+            <FontAwesome name="thumbs-up" size={30} color="#fff" />
+          ) : null}
+          {selectedOption === option.id && selectedOption !== correctOption ? (
+            <FontAwesome name="thumbs-down" size={30} color="#fff" />
+          ) : null}
         </TouchableOpacity>
       ))}
     </View>

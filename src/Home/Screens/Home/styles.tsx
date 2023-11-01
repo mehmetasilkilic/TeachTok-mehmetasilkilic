@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+const { height } = Dimensions.get("window");
 
 export const styles = StyleSheet.create({
   backgroundImage: {
@@ -15,6 +17,24 @@ export const styles = StyleSheet.create({
     alignItems: "flex-end",
     justifyContent: "space-between",
   },
+  indicator: {
+    flex: 1,
+    width: "100%",
+    height: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  secondIndicator: {
+    width: "100%",
+    paddingRight: 16,
+    alignItems: "flex-end",
+    position: "absolute",
+    top: 140,
+  },
+  pagerView: {
+    flex: 1,
+    height: height,
+  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -29,16 +49,27 @@ export const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.4)",
   },
   textContainer: {
+    flexWrap: "wrap",
+    flexDirection: "row",
     marginTop: 64,
     borderRadius: 8,
     margin: 16,
     overflow: "hidden",
     width: "65%",
+    alignItems: "stretch",
+  },
+  wordContainer: {
+    paddingHorizontal: 4,
+    overflow: "hidden",
+    backgroundColor: "rgba(0, 0, 0, 0.6)",
   },
   text: {
-    backgroundColor: "rgba(0, 0, 0, 0.6)",
-    padding: 8,
+    lineHeight: 36,
     color: "white",
     fontSize: 24,
+  },
+  errorText: {
+    fontSize: 30,
+    color: "red",
   },
 });

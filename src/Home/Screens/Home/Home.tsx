@@ -1,9 +1,16 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { ImageBackground, SafeAreaView, Text, View } from "react-native";
+import { useState } from "react";
+import {
+  ActivityIndicator,
+  ImageBackground,
+  SafeAreaView,
+  Text,
+  View,
+} from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+import PagerView from "react-native-pager-view";
 
-import { QuestionProps } from "../../Models";
+import { FETCH_STATUS } from "../../Helpers/fetchStatus";
+import useQuestions from "../../Hooks/useQuestions";
 
 import Header from "../../Components/Header/Header";
 import HeaderTime from "../../Components/HeaderTime/HeaderTime";
@@ -15,77 +22,88 @@ import Questions from "../../Components/Questions/Questions";
 import { styles } from "./styles";
 
 const Home = () => {
-  const [question, setQuestion] = useState<QuestionProps | undefined>(
-    undefined
-  );
-  const [correctOption, setCorrectOption] = useState("");
+  const [selected, setSelected] = useState(0);
 
-  const fetchQuestions = async () => {
-    const { data } = await axios.get(
-      "https://cross-platform.rp.devfactory.com/for_you"
-    );
-    setQuestion(data);
-  };
+  const { questionsData, status } = useQuestions(selected);
 
-  const fetchAnswer = async () => {
-    const { data } = await axios.get(
-      `https://cross-platform.rp.devfactory.com/reveal?id=${question?.id}`
-    );
-    setCorrectOption(data.correct_options[0].id);
-  };
-
-  useEffect(() => {
-    // fetchQuestions();
-  }, []);
-
-  useEffect(() => {
-    if (question) {
-      fetchAnswer();
-    }
-  }, [question]);
+  const isLoading = status === FETCH_STATUS.LOADING;
+  const isSuccess = status === FETCH_STATUS.SUCCESS;
+  const isError = status === FETCH_STATUS.ERROR;
 
   return (
     <>
-      {question && (
-        <View style={styles.container}>
-          <ImageBackground
-            resizeMode="cover"
-            source={{ uri: question?.image }}
-            style={styles.backgroundImage}
-          >
-            <View style={styles.tint} />
-            <SafeAreaView style={{ flex: 1 }}>
-              <Header
-                title="For You"
-                leftElement={<HeaderTime timeleft="10m" />}
-                rightElement={
-                  <FontAwesome name="search" size={24} color="#fff" />
-                }
-              />
-              <View style={styles.subContainer}>
-                <View style={styles.textContainer}>
-                  <Text style={styles.text}>{question.question}</Text>
-                </View>
-                <View>
-                  <View style={styles.row}>
-                    <View style={styles.column}>
-                      <Questions
-                        options={question.options}
-                        correctOption={correctOption}
-                      />
-                      <Info
-                        username={question.user.name}
-                        description={question.description}
-                      />
-                    </View>
-                    <Interactions profileImage={question.user.avatar} />
-                  </View>
-                  <Playlist playlistText={question.playlist} />
-                </View>
-              </View>
-            </SafeAreaView>
-          </ImageBackground>
+      {isLoading && questionsData.length === 0 ? (
+        <View style={styles.indicator}>
+          <ActivityIndicator size="large" color="#fff" />
         </View>
+      ) : isSuccess && questionsData ? (
+        <>
+          <PagerView
+            orientation="vertical"
+            onPageSelected={(e) => setSelected(e.nativeEvent.position)}
+            style={styles.pagerView}
+            initialPage={0}
+            scrollEnabled={selected < questionsData.length - 3}
+          >
+            {questionsData.map((question, index) => (
+              <View style={styles.container} key={index}>
+                <ImageBackground
+                  resizeMode="cover"
+                  source={{ uri: question.image }}
+                  style={styles.backgroundImage}
+                >
+                  <View style={styles.tint} />
+                  <SafeAreaView style={{ flex: 1 }}>
+                    <Header
+                      title="For You"
+                      leftElement={<HeaderTime />}
+                      rightElement={
+                        <FontAwesome name="search" size={24} color="#fff" />
+                      }
+                    />
+                    <View style={styles.subContainer}>
+                      {selected >= questionsData.length - 3 ? (
+                        <View style={styles.secondIndicator}>
+                          <ActivityIndicator size="large" color="#fff" />
+                        </View>
+                      ) : null}
+                      <View style={styles.textContainer}>
+                        {question.question.split(" ").map((word, index) => (
+                          <View style={styles.wordContainer} key={index}>
+                            <Text style={styles.text}>{word}</Text>
+                          </View>
+                        ))}
+                      </View>
+                      <View>
+                        <View style={styles.row}>
+                          <View style={styles.column}>
+                            <Questions
+                              options={question.options}
+                              questionId={question.id}
+                              questionStatus={status}
+                            />
+                            <Info
+                              username={question.user.name}
+                              description={question.description}
+                            />
+                          </View>
+                          <Interactions profileImage={question.user.avatar} />
+                        </View>
+                        <Playlist playlistText={question.playlist} />
+                      </View>
+                    </View>
+                  </SafeAreaView>
+                </ImageBackground>
+              </View>
+            ))}
+          </PagerView>
+        </>
+      ) : isError ? (
+        <View style={styles.indicator}>
+          <Text style={styles.errorText}>ERROR</Text>
+        </View>
+      ) : (
+        <></>
       )}
     </>
   );

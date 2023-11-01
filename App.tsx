@@ -1,16 +1,19 @@
 import React from "react";
-import { SafeAreaView, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
 import BottomTabStack from "./src/Core/Stacks/BottomTabStacks";
+import { TimerProvider } from "./src/Core/Context/TimerContext";
 
-function App(): JSX.Element {
+const App = () => {
   return (
-    <NavigationContainer>
-      <StatusBar barStyle={"light-content"} />
-      <BottomTabStack />
-    </NavigationContainer>
+    <TimerProvider>
+      <NavigationContainer>
+        <StatusBar barStyle={"light-content"} />
+        <BottomTabStack />
+      </NavigationContainer>
+    </TimerProvider>
   );
-}
+};
 
 export default App;

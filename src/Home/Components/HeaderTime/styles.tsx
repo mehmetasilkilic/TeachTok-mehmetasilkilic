@@ -8,6 +8,6 @@ export const styles = StyleSheet.create({
   text: {
     marginLeft: 8,
     fontSize: 16,
-    color: "#777",
+    color: "#999",
   },
 });
