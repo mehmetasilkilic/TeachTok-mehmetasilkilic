@@ -57,7 +57,7 @@ const useQuestions = (selected: number) => {
   }, [selected]);
 
   useEffect(() => {
-    if (questionsData.length > 0 && selected >= prevSelected) {
+    if (questionsData.length > 0 && selected >= prevSelected - 1) {
       const newQuestions: QuestionProps[] = [];
       const fetchDataIn = async () => {
         for (let i = 0; i < 3; i++) {
