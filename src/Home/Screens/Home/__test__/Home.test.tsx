@@ -27,7 +27,7 @@ describe("Home Screen", () => {
             id: 6194,
             image:
               "https://cross-platform-rwa.rp.devfactory.com/images/6194%20-%20black%20people%20after%20slavery.png",
-            options: [["Object"], ["Object"], ["Object"]],
+            options: [],
             playlist: "Period 6: 1865-1898",
             question:
               'What did it mean when defenders of slavery called it a "positive social good"?',
