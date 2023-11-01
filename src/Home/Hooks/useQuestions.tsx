@@ -1,9 +1,9 @@
+import { Alert } from "react-native";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { QuestionProps } from "../Models";
 import { FETCH_STATUS } from "../Helpers/fetchStatus";
-import { Alert } from "react-native";
 
 const useQuestions = (selected: number) => {
   const [questionsData, setQuestionsData] = useState<QuestionProps[]>([]);

@@ -10,10 +10,9 @@ import { styles } from "./styles";
 interface QuestionsProps {
   options: OptionProps[];
   questionId: number;
-  questionStatus: string;
 }
 
-const Questions = ({ options, questionId, questionStatus }: QuestionsProps) => {
+const Questions = ({ options, questionId }: QuestionsProps) => {
   const [selectedOption, setSelectedOption] = useState("");
   const { correctOption } = useCorrectAnswer(questionId);
 
@@ -24,9 +23,10 @@ const Questions = ({ options, questionId, questionStatus }: QuestionsProps) => {
   };
 
   return (
-    <View style={styles.container}>
-      {options.map((option) => (
+    <View style={styles.container} testID="questions-container">
+      {options.map((option, index) => (
         <TouchableOpacity
+          testID={`option-${index + 1}`}
           disabled={selectedOption !== ""}
           onPress={() => onSelectOption(option.id)}
           key={option.id}

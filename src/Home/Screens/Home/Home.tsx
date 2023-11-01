@@ -33,7 +33,7 @@ const Home = () => {
   return (
     <>
       {isLoading && questionsData.length === 0 ? (
-        <View style={styles.indicator}>
+        <View testID="loading-indicator" style={styles.indicator}>
           <ActivityIndicator size="large" color="#fff" />
         </View>
       ) : isSuccess && questionsData ? (
@@ -80,7 +80,6 @@ const Home = () => {
                             <Questions
                               options={question.options}
                               questionId={question.id}
-                              questionStatus={status}
                             />
                             <Info
                               username={question.user.name}

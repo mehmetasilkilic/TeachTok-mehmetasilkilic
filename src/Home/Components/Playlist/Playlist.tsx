@@ -8,7 +8,7 @@ interface PlaylistProps {
 }
 
 const Playlist = ({ playlistText }: PlaylistProps) => (
-  <View style={styles.container}>
+  <View testID="playlist-container" style={styles.container}>
     <View style={styles.subContainer}>
       <AntDesign name="youtube" size={16} color="#fff" />
       <Text style={styles.text}>Playlist&#x2022;{playlistText}</Text>
