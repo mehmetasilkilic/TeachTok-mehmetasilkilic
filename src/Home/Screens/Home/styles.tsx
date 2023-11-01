@@ -36,7 +36,15 @@ export const styles = StyleSheet.create({
     height: height,
   },
   container: {
+    position: "relative",
     flex: 1,
+  },
+  header: {
+    zIndex: 1,
+    position: "absolute",
+    width: "100%",
+  },
+  wrapper: {
     justifyContent: "center",
     alignItems: "center",
   },

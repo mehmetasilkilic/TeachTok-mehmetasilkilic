@@ -38,64 +38,68 @@ const Home = () => {
         </View>
       ) : isSuccess && questionsData ? (
         <>
-          <PagerView
-            orientation="vertical"
-            onPageSelected={(e) => setSelected(e.nativeEvent.position)}
-            style={styles.pagerView}
-            initialPage={0}
-            scrollEnabled={selected < questionsData.length - 3}
-          >
-            {questionsData.map((question, index) => (
-              <View style={styles.container} key={index}>
-                <ImageBackground
-                  resizeMode="cover"
-                  source={{ uri: question.image }}
-                  style={styles.backgroundImage}
-                >
-                  <View style={styles.tint} />
-                  <SafeAreaView style={{ flex: 1 }}>
-                    <Header
-                      title="For You"
-                      leftElement={<HeaderTime />}
-                      rightElement={
-                        <FontAwesome name="search" size={24} color="#fff" />
-                      }
-                    />
-                    <View style={styles.subContainer}>
-                      {selected >= questionsData.length - 3 ? (
-                        <View style={styles.secondIndicator}>
-                          <ActivityIndicator size="large" color="#fff" />
-                        </View>
-                      ) : null}
-                      <View style={styles.textContainer}>
-                        {question.question.split(" ").map((word, index) => (
-                          <View style={styles.wordContainer} key={index}>
-                            <Text style={styles.text}>{word}</Text>
+          <View style={styles.header}>
+            <Header
+              title="For You"
+              leftElement={<HeaderTime />}
+              rightElement={
+                <FontAwesome name="search" size={24} color="#fff" />
+              }
+            />
+          </View>
+          <View style={styles.container}>
+            <PagerView
+              orientation="vertical"
+              onPageSelected={(e) => setSelected(e.nativeEvent.position)}
+              style={styles.pagerView}
+              initialPage={0}
+              scrollEnabled={selected < questionsData.length - 3}
+            >
+              {questionsData.map((question, index) => (
+                <View style={styles.wrapper} key={index}>
+                  <ImageBackground
+                    resizeMode="cover"
+                    source={{ uri: question.image }}
+                    style={styles.backgroundImage}
+                  >
+                    <View style={styles.tint} />
+                    <SafeAreaView style={{ flex: 1 }}>
+                      <View style={styles.subContainer}>
+                        {selected >= questionsData.length - 3 ? (
+                          <View style={styles.secondIndicator}>
+                            <ActivityIndicator size="large" color="#fff" />
                           </View>
-                        ))}
-                      </View>
-                      <View>
-                        <View style={styles.row}>
-                          <View style={styles.column}>
-                            <Questions
-                              options={question.options}
-                              questionId={question.id}
-                            />
-                            <Info
-                              username={question.user.name}
-                              description={question.description}
-                            />
-                          </View>
-                          <Interactions profileImage={question.user.avatar} />
+                        ) : null}
+                        <View style={styles.textContainer}>
+                          {question.question.split(" ").map((word, index) => (
+                            <View style={styles.wordContainer} key={index}>
+                              <Text style={styles.text}>{word}</Text>
+                            </View>
+                          ))}
                         </View>
-                        <Playlist playlistText={question.playlist} />
+                        <View>
+                          <View style={styles.row}>
+                            <View style={styles.column}>
+                              <Questions
+                                options={question.options}
+                                questionId={question.id}
+                              />
+                              <Info
+                                username={question.user.name}
+                                description={question.description}
+                              />
+                            </View>
+                            <Interactions profileImage={question.user.avatar} />
+                          </View>
+                          <Playlist playlistText={question.playlist} />
+                        </View>
                       </View>
-                    </View>
-                  </SafeAreaView>
-                </ImageBackground>
-              </View>
-            ))}
-          </PagerView>
+                    </SafeAreaView>
+                  </ImageBackground>
+                </View>
+              ))}
+            </PagerView>
+          </View>
         </>
       ) : isError ? (
         <View style={styles.indicator}>

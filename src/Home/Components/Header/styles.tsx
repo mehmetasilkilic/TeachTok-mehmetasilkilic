@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
+  safe: {},
   header: {
     flexDirection: "row",
     justifyContent: "space-between",
