@@ -25,7 +25,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     width: "100%",
-    backgroundColor: "rgba(24, 240, 64, 0.4)",
+    backgroundColor: "rgba(40, 177, 143, 0.7)",
     justifyContent: "space-between",
   },
   wrongAnswer: {
@@ -37,7 +37,7 @@ export const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 8,
     width: "100%",
-    backgroundColor: "rgba(255, 0, 0, 0.4)",
+    backgroundColor: "rgba(220, 95, 95, 0.7)",
     justifyContent: "space-between",
   },
   text: {

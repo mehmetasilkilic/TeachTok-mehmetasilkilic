@@ -34,7 +34,7 @@ const Home = () => {
     <>
       {isLoading && questionsData.length === 0 ? (
         <View testID="loading-indicator" style={styles.indicator}>
-          <ActivityIndicator size="large" color="#fff" />
+          <ActivityIndicator size="large" color="#555" />
         </View>
       ) : isSuccess && questionsData ? (
         <>
