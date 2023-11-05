@@ -9,6 +9,7 @@ const useQuestions = (selected: number) => {
   const [questionsData, setQuestionsData] = useState<QuestionProps[]>([]);
   const [prevSelected, setPrevSelected] = useState(selected);
   const [status, setStatus] = useState(FETCH_STATUS.IDLE);
+  const [whileStatus, setWhileStatus] = useState(FETCH_STATUS.IDLE);
 
   const fetchQuestions = async () => {
     try {
@@ -59,6 +60,7 @@ const useQuestions = (selected: number) => {
 
   useEffect(() => {
     if (questionsData.length > 0 && selected >= prevSelected - 1) {
+      setWhileStatus(FETCH_STATUS.LOADING);
       const newQuestions: QuestionProps[] = [];
       const fetchDataIn = async () => {
         for (let i = 0; i < 5; i++) {
@@ -66,12 +68,13 @@ const useQuestions = (selected: number) => {
           newQuestions.push(data);
         }
         setQuestionsData((prevData) => [...prevData, ...newQuestions]);
+        setWhileStatus(FETCH_STATUS.SUCCESS);
       };
       fetchDataIn();
     }
   }, [selected]);
 
-  return { questionsData, status };
+  return { questionsData, whileStatus, status };
 };
 
 export default useQuestions;

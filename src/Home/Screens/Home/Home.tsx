@@ -22,14 +22,14 @@ import Info from "../../Components/Info/Info";
 import Answers from "../../Components/Answers/Answers";
 
 import { styles } from "./styles";
+import { extraHeight } from "../../../Core/Constants/extraHeight";
 
 const Home = () => {
   const [selected, setSelected] = useState(0);
 
   const { height } = Dimensions.get("window");
-  const BottomTabHeight = Platform.OS === "ios" ? 80 : 70;
 
-  const { questionsData, status } = useQuestions(selected);
+  const { questionsData, status, whileStatus } = useQuestions(selected);
 
   const isLoading = status === FETCH_STATUS.LOADING;
   const isSuccess = status === FETCH_STATUS.SUCCESS;
@@ -37,7 +37,7 @@ const Home = () => {
 
   return (
     <>
-      {isLoading ? (
+      {isLoading && questionsData.length < 6 ? (
         <View testID="loading-indicator" style={styles.indicator}>
           <ActivityIndicator size="large" color="#555" />
         </View>
@@ -69,7 +69,7 @@ const Home = () => {
                     <View style={styles.tint} />
                     <SafeAreaView style={{ flex: 1 }}>
                       <View style={styles.subContainer}>
-                        {selected >= questionsData.length - 3 ? (
+                        {whileStatus === FETCH_STATUS.LOADING ? (
                           <View style={styles.secondIndicator}>
                             <ActivityIndicator size="large" color="#fff" />
                           </View>
@@ -104,7 +104,7 @@ const Home = () => {
               )}
               onScroll={(event) => {
                 const offsetY = event.nativeEvent.contentOffset.y;
-                const itemHeight = height - BottomTabHeight;
+                const itemHeight = height - extraHeight;
                 const lastItemIndex = questionsData.length - 1;
 
                 const currentItemIndex = Math.floor(offsetY / itemHeight);

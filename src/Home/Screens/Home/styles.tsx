@@ -1,13 +1,16 @@
-import { Dimensions, StyleSheet, Platform } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+import { extraHeight } from "../../../Core/Constants/extraHeight";
 
 const { height } = Dimensions.get("window");
-const BottomTabHeight = Platform.OS === "ios" ? 80 : 70;
+
+const actualHeight = height - extraHeight;
 
 export const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: "100%",
-    height: height - BottomTabHeight,
+    height: actualHeight,
     resizeMode: "cover",
   },
   column: {
@@ -35,7 +38,7 @@ export const styles = StyleSheet.create({
   container: {
     position: "relative",
     flex: 1,
-    height: "100%",
+    height: actualHeight,
   },
   header: {
     zIndex: 1,
@@ -45,6 +48,7 @@ export const styles = StyleSheet.create({
   wrapper: {
     justifyContent: "center",
     alignItems: "center",
+    height: actualHeight,
     flex: 1,
   },
   subContainer: {

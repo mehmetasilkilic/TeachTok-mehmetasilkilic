@@ -10,8 +10,7 @@ import { Activity, Bookmarks, Discover, Profile } from "./DummyScreens";
 import Home from "../../Home/Screens/Home/Home";
 
 const Tab = createBottomTabNavigator<BottomTabStackParamList>();
-
-const BottomTabHeight = Platform.OS === "ios" ? 80 : 50;
+const BottomTabHeight = Platform.OS === "ios" ? 80 : 60;
 
 const BottomTabStack = () => {
   return (
@@ -20,6 +19,7 @@ const BottomTabStack = () => {
         tabBarStyle: {
           backgroundColor: "#000",
           borderTopWidth: 0,
+          maxHeight: BottomTabHeight,
           height: BottomTabHeight,
         },
         tabBarActiveTintColor: "#fff",
