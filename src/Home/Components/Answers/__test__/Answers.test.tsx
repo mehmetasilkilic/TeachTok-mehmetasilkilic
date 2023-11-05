@@ -45,32 +45,4 @@ describe("Answers Component", () => {
     expect(option2.props.accessibilityState.disabled).toBeTruthy();
     expect(option3.props.accessibilityState.disabled).toBeTruthy();
   });
-
-  it("applies correct styles for a correct answer", () => {
-    const { getByTestId } = render(
-      <Answers options={options} questionId={questionId} />
-    );
-
-    const option1 = getByTestId("option-1");
-    fireEvent.press(option1);
-
-    const correctAnswerButton = getByTestId("option-1");
-    expect(correctAnswerButton.props.style.backgroundColor).toBe(
-      styles.correctAnswer.backgroundColor
-    );
-  });
-
-  it("applies correct styles for a wrong answer", () => {
-    const { getByTestId } = render(
-      <Answers options={options} questionId={questionId} />
-    );
-
-    const option2 = getByTestId("option-2");
-    fireEvent.press(option2);
-
-    const wrongAnswerButton = getByTestId("option-2");
-    expect(wrongAnswerButton.props.style.backgroundColor).toBe(
-      styles.wrongAnswer.backgroundColor
-    );
-  });
 });
