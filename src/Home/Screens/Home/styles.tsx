@@ -6,7 +6,7 @@ export const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: "100%",
-    height: "100%",
+    height: height - 80,
     resizeMode: "cover",
   },
   column: {
@@ -31,13 +31,10 @@ export const styles = StyleSheet.create({
     position: "absolute",
     top: 140,
   },
-  pagerView: {
-    flex: 1,
-    height: height,
-  },
   container: {
     position: "relative",
     flex: 1,
+    height: "100%",
   },
   header: {
     zIndex: 1,
@@ -47,6 +44,7 @@ export const styles = StyleSheet.create({
   wrapper: {
     justifyContent: "center",
     alignItems: "center",
+    flex: 1,
   },
   subContainer: {
     flex: 1,
@@ -59,7 +57,7 @@ export const styles = StyleSheet.create({
   textContainer: {
     flexWrap: "wrap",
     flexDirection: "row",
-    marginTop: 64,
+    marginTop: 96,
     borderRadius: 8,
     margin: 16,
     overflow: "hidden",

@@ -49,9 +49,11 @@ const AnswerButton = ({
   };
 
   useEffect(() => {
-    if (correctOption === option.id && isDisabled) {
-      setAnswerStatus("realCorrect");
-      slideBackground();
+    if (answerStatus !== "correct") {
+      if (correctOption === option.id && isDisabled) {
+        setAnswerStatus("realCorrect");
+        slideBackground();
+      }
     }
   }, [isDisabled]);
 

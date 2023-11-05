@@ -16,7 +16,6 @@ const useQuestions = (selected: number) => {
         "https://cross-platform.rp.devfactory.com/for_you"
       );
       if (res.status === 200) {
-        setStatus(FETCH_STATUS.SUCCESS);
         return res.data;
       }
     } catch (err) {
@@ -38,12 +37,14 @@ const useQuestions = (selected: number) => {
   };
 
   const fetchData = async () => {
+    setStatus(FETCH_STATUS.LOADING);
     const newQuestions: QuestionProps[] = [];
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 6; i++) {
       const data = await fetchQuestions();
       newQuestions.push(data);
     }
     setQuestionsData(newQuestions);
+    setStatus(FETCH_STATUS.SUCCESS);
   };
 
   useEffect(() => {
@@ -60,7 +61,7 @@ const useQuestions = (selected: number) => {
     if (questionsData.length > 0 && selected >= prevSelected - 1) {
       const newQuestions: QuestionProps[] = [];
       const fetchDataIn = async () => {
-        for (let i = 0; i < 3; i++) {
+        for (let i = 0; i < 5; i++) {
           const data = await fetchQuestions();
           newQuestions.push(data);
         }

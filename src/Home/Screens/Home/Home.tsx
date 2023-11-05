@@ -5,9 +5,10 @@ import {
   SafeAreaView,
   Text,
   View,
+  FlatList,
+  Dimensions,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
-import PagerView from "react-native-pager-view";
 
 import { FETCH_STATUS } from "../../Helpers/fetchStatus";
 import useQuestions from "../../Hooks/useQuestions";
@@ -24,6 +25,8 @@ import { styles } from "./styles";
 const Home = () => {
   const [selected, setSelected] = useState(0);
 
+  const { height } = Dimensions.get("window");
+
   const { questionsData, status } = useQuestions(selected);
 
   const isLoading = status === FETCH_STATUS.LOADING;
@@ -32,7 +35,7 @@ const Home = () => {
 
   return (
     <>
-      {isLoading && questionsData.length === 0 ? (
+      {isLoading ? (
         <View testID="loading-indicator" style={styles.indicator}>
           <ActivityIndicator size="large" color="#555" />
         </View>
@@ -48,18 +51,17 @@ const Home = () => {
             />
           </View>
           <View style={styles.container}>
-            <PagerView
-              orientation="vertical"
-              onPageSelected={(e) => setSelected(e.nativeEvent.position)}
-              style={styles.pagerView}
-              initialPage={0}
+            <FlatList
+              data={questionsData}
+              horizontal={false}
+              windowSize={6}
+              pagingEnabled={true}
               scrollEnabled={selected < questionsData.length - 3}
-            >
-              {questionsData.map((question, index) => (
-                <View style={styles.wrapper} key={index}>
+              renderItem={({ item }) => (
+                <View style={styles.wrapper}>
                   <ImageBackground
                     resizeMode="cover"
-                    source={{ uri: question.image }}
+                    source={{ uri: item.image }}
                     style={styles.backgroundImage}
                   >
                     <View style={styles.tint} />
@@ -71,7 +73,7 @@ const Home = () => {
                           </View>
                         ) : null}
                         <View style={styles.textContainer}>
-                          {question.question.split(" ").map((word, index) => (
+                          {item.question.split(" ").map((word, index) => (
                             <View style={styles.wordContainer} key={index}>
                               <Text style={styles.text}>{word}</Text>
                             </View>
@@ -81,24 +83,38 @@ const Home = () => {
                           <View style={styles.row}>
                             <View style={styles.column}>
                               <Answers
-                                options={question.options}
-                                questionId={question.id}
+                                options={item.options}
+                                questionId={item.id}
                               />
                               <Info
-                                username={question.user.name}
-                                description={question.description}
+                                username={item.user.name}
+                                description={item.description}
                               />
                             </View>
-                            <Interactions profileImage={question.user.avatar} />
+                            <Interactions profileImage={item.user.avatar} />
                           </View>
-                          <Playlist playlistText={question.playlist} />
+                          <Playlist playlistText={item.playlist} />
                         </View>
                       </View>
                     </SafeAreaView>
                   </ImageBackground>
                 </View>
-              ))}
-            </PagerView>
+              )}
+              onScroll={(event) => {
+                const offsetY = event.nativeEvent.contentOffset.y;
+                const itemHeight = height - 80;
+                const lastItemIndex = questionsData.length - 1;
+
+                const currentItemIndex = Math.floor(offsetY / itemHeight);
+
+                const fourthItemFromEndIndex = lastItemIndex - 3;
+
+                if (currentItemIndex === fourthItemFromEndIndex) {
+                  setSelected(fourthItemFromEndIndex);
+                }
+              }}
+              keyExtractor={(item, index) => item.id.toString() + index}
+            />
           </View>
         </>
       ) : isError ? (
