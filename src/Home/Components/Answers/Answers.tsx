@@ -1,11 +1,11 @@
 import { useState } from "react";
-import { View, Text, TouchableOpacity } from "react-native";
-import { FontAwesome } from "@expo/vector-icons";
+import { View } from "react-native";
 
 import { OptionProps } from "../../Models";
 import useCorrectAnswer from "../../Hooks/useCorrectAnswer";
 
 import { styles } from "./styles";
+import AnswerButton from "../AnswerButton/AnwerButton";
 
 interface AnswersProps {
   options: OptionProps[];
@@ -13,43 +13,24 @@ interface AnswersProps {
 }
 
 const Answers = ({ options, questionId }: AnswersProps) => {
-  const [selectedOption, setSelectedOption] = useState("");
   const { correctOption } = useCorrectAnswer(questionId);
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const onSelectOption = (optionId: string) => {
-    if (selectedOption === "") {
-      setSelectedOption(optionId);
-    }
+  const toggleDisabled = () => {
+    setIsDisabled(true);
   };
 
   return (
     <View style={styles.container} testID="answers-container">
       {options.map((option, index) => (
-        <TouchableOpacity
+        <AnswerButton
+          key={index}
           testID={`option-${index + 1}`}
-          disabled={selectedOption !== ""}
-          onPress={() => onSelectOption(option.id)}
-          key={option.id}
-          style={
-            selectedOption === ""
-              ? styles.answer
-              : selectedOption === option.id
-              ? selectedOption === correctOption
-                ? styles.correctAnswer
-                : styles.wrongAnswer
-              : selectedOption !== correctOption && correctOption === option.id
-              ? styles.correctAnswer
-              : styles.answer
-          }
-        >
-          <Text style={styles.text}>{option.answer}</Text>
-          {selectedOption === option.id && selectedOption === correctOption ? (
-            <FontAwesome name="thumbs-up" size={30} color="#fff" />
-          ) : null}
-          {selectedOption === option.id && selectedOption !== correctOption ? (
-            <FontAwesome name="thumbs-down" size={30} color="#fff" />
-          ) : null}
-        </TouchableOpacity>
+          toggleDisabled={toggleDisabled}
+          isDisabled={isDisabled}
+          option={option}
+          correctOption={correctOption}
+        />
       ))}
     </View>
   );
