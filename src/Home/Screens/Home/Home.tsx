@@ -7,6 +7,7 @@ import {
   View,
   FlatList,
   Dimensions,
+  Platform,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 
@@ -26,6 +27,7 @@ const Home = () => {
   const [selected, setSelected] = useState(0);
 
   const { height } = Dimensions.get("window");
+  const BottomTabHeight = Platform.OS === "ios" ? 80 : 70;
 
   const { questionsData, status } = useQuestions(selected);
 
@@ -102,7 +104,7 @@ const Home = () => {
               )}
               onScroll={(event) => {
                 const offsetY = event.nativeEvent.contentOffset.y;
-                const itemHeight = height - 80;
+                const itemHeight = height - BottomTabHeight;
                 const lastItemIndex = questionsData.length - 1;
 
                 const currentItemIndex = Math.floor(offsetY / itemHeight);

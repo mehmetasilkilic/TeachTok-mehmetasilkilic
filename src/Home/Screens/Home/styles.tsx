@@ -1,12 +1,13 @@
-import { Dimensions, StyleSheet } from "react-native";
+import { Dimensions, StyleSheet, Platform } from "react-native";
 
 const { height } = Dimensions.get("window");
+const BottomTabHeight = Platform.OS === "ios" ? 80 : 70;
 
 export const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
     width: "100%",
-    height: height - 80,
+    height: height - BottomTabHeight,
     resizeMode: "cover",
   },
   column: {

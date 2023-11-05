@@ -1,3 +1,4 @@
+import { Platform } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
@@ -10,6 +11,8 @@ import Home from "../../Home/Screens/Home/Home";
 
 const Tab = createBottomTabNavigator<BottomTabStackParamList>();
 
+const BottomTabHeight = Platform.OS === "ios" ? 80 : 50;
+
 const BottomTabStack = () => {
   return (
     <Tab.Navigator
@@ -17,7 +20,7 @@ const BottomTabStack = () => {
         tabBarStyle: {
           backgroundColor: "#000",
           borderTopWidth: 0,
-          height: 80,
+          height: BottomTabHeight,
         },
         tabBarActiveTintColor: "#fff",
         tabBarInactiveTintColor: "#777",
