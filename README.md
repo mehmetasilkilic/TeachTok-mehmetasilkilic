@@ -1,4 +1,4 @@
-# Mehmet Asil Kılıç React Native Case Study
+# Mehmet Asil Kılıç React Native Case
 
 ## Run Locally
 
